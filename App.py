@@ -64,7 +64,7 @@ tab1, tab2, tab3 = st.tabs([
     "🛒 Gde da kupim u blizini"
 ])
 
-# Funkcija za generisanje system prompt-a na osnovu podešavanja
+# Funkcija za generisanje system prompt--a na osnovu podešavanja
 def get_system_instruction():
     return f"""
     Ti si stručni AI nutricionista i kuvar. Tvoja pravila su stroga i moraju se poštovati:
