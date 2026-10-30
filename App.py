@@ -51,7 +51,7 @@ api_key_input = st.sidebar.text_input("Unesite Google Gemini API ključ:", type=
 client = None
 if api_key_input:
     try:
-        client = genai.Client(api_key_input=api_key_input)
+        client = genai.Client(api_key_=api_key_input)
     except Exception as e:
         st.sidebar.error(f"Greška pri inicijalizaciji: {e}")
 else:
