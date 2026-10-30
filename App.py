@@ -57,7 +57,7 @@ def get_instructions():
 
 with tab1:
     st.header("Pretraga recepata")
-    query = st.text_input("Šta želiš da spremiš?", placeholder="npr. Veganski gulaš")
+    query = st.text_input("Šta želiš da spremiš?", placeholder="npr. Vege pasta")
     
     if st.button("Pronađi recept", key="b1"):
         if not client:
@@ -69,7 +69,7 @@ with tab1:
                 try:
                     p = f"Nađi recept za: {query}. Pravila: {get_instructions()}. Daj sastojke, pripremu i kalorije."
                     res = client.models.generate_content(
-                        model='gemini-2.5-flash',
+                        model='gemini-3.8-flash',
                         contents=p,
                         config=types.GenerateContentConfig(
                             tools=[types.Tool(google_search=types.GoogleSearch())]
@@ -93,7 +93,7 @@ with tab2:
                 try:
                     p = f"Imam u frižideru: {ing}. Pravila: {get_instructions()}. Predloži recept, šta fali od namirnica i nutritivne vrednosti."
                     res = client.models.generate_content(
-                        model='gemini-2.5-flash',
+                        model='gemini-3.8-flash',
                         contents=p,
                         config=types.GenerateContentConfig(
                             tools=[types.Tool(google_search=types.GoogleSearch())]
@@ -117,7 +117,7 @@ with tab3:
                 try:
                     p = f"Gde se može kupiti '{item}' blizu lokacije {user_location} u radijusu od {search_radius} km? Pronađi konkretne prodavnice."
                     res = client.models.generate_content(
-                        model='gemini-2.5-flash',
+                        model='gemini-3.8-flash',
                         contents=p,
                         config=types.GenerateContentConfig(
                             tools=[types.Tool(google_search=types.GoogleSearch())]
