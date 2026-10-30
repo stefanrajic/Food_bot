@@ -131,4 +131,49 @@ with tab2:
                     {get_system_instruction()}
                     
                     1. Predloži odličan recept koji koristi ove namirnice (ili većinu njih).
-                    2.
+                    2. Jasno naglasi **šta mi fali** od dodatnih sastojaka da bih spremio ovo jelo.
+                    3. Izračunaj nutritivne vrednosti za kompletno jelo.
+                    """
+                    
+                    response = client.models.generate_content(
+                        model='gemini-2.5-flash',
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            tools=[types.Tool(google_search=types.GoogleSearch())]
+                        )
+                    )
+                    st.markdown(response.text)
+                except Exception as e:
+                    st.error(f"Došlo je do greške: {e}")
+
+# --- TAB 3: GDE DA KUPIM U BLIZINI ---
+with tab3:
+    st.header("Pretraga prodavnica u radijusu")
+    item_to_buy = st.text_input("Šta tražite da kupite?", placeholder="npr. dimljeni tofu, nutritivni kvasac, tempeh")
+    
+    if st.button("Pronađi gde ima da se kupi", key="btn_shop"):
+        if not client:
+            st.error("Unesite Gemini API ključ u levom meniju!")
+        elif not item_to_buy:
+            st.warning("Unesite naziv namirnice koju tražite.")
+        else:
+            with st.spinner(f"Pretražujem prodavnice zdrave hrane i markete u krugu od {search_radius} km od lokacije {user_location}..."):
+                try:
+                    prompt = f"""
+                    Korisnik traži namirnicu: {item_to_buy}.
+                    Lokacija korisnika: {user_location}.
+                    Maksimalni radijus pretrage: {search_radius} km.
+                    
+                    Pretraži internet i pronađi konkretne prodavnice zdrave hrane, supermarkete ili specijalizovane radnje blizu ove lokacije u tom radijusu gde se ova namirnica može kupiti. Navedi nazive prodavnica, okvirne lokacije/adrese ako su dostupne na mapi ili netu, i savetuj korisnika gde da ide.
+                    """
+                    
+                    response = client.models.generate_content(
+                        model='gemini-2.5-flash',
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            tools=[types.Tool(google_search=types.GoogleSearch())]
+                        )
+                    )
+                    st.markdown(response.text)
+                except Exception as e:
+                    st.error(f"Došlo je do greške: {e}")
